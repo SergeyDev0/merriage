@@ -197,11 +197,13 @@ const App = () => {
           </div>
           <div className="form__wrapper">
             <label htmlFor="">Планируете ли присутствовать?</label>
-            <select name="" id="">
-              <option value="default">Выберете один вариант</option>
-              <option value="1">Да, конечно </option>
-              <option value="2">К сожалению, нет</option>
-            </select>
+            <div className="select-wrapper">
+            	<select name="" id="">
+	              <option value="default">Выберите один вариант</option>
+	              <option value="1">Да, конечно </option>
+	              <option value="2">К сожалению, нет</option>
+	            </select>
+            </div>
           </div>
           <div className="form__wrapper">
             <label htmlFor="">Ваш номер телефона</label>
@@ -218,28 +220,30 @@ const App = () => {
         </div>
         <div className="form__alcohol">
           <h4 className="subtitle">Буду пить</h4>
-          <div className="form__wrapper-select">
-            <input type="checkbox" id="vodka" />
-            <label htmlFor="vodka">Водка</label>
-          </div>
-          <div className="form__wrapper-select">
-            <input type="checkbox" id="wine" />
-            <label htmlFor="wine">Вино</label>
-          </div>
-          <div className="form__wrapper-select">
-            <input type="checkbox" id="cognac" />
-            <label htmlFor="cognac">Коньяк</label>
-          </div>
-          <div className="form__wrapper-select">
-            <input type="checkbox" id="champagne" />
-            <label htmlFor="champagne">Шампанское</label>
-          </div>
-          <div className="form__wrapper-select">
-            <input type="checkbox" id="not" />
-            <label htmlFor="not">Не буду пить алкоголь</label>
+          <div className="col">
+          	<div className="form__wrapper-checkbox">
+	            <input type="checkbox" id="vodka" />
+	            <label htmlFor="vodka">Водка</label>
+	          </div>
+	          <div className="form__wrapper-checkbox">
+	            <input type="checkbox" id="wine" />
+	            <label htmlFor="wine">Вино</label>
+	          </div>
+	          <div className="form__wrapper-checkbox">
+	            <input type="checkbox" id="cognac" />
+	            <label htmlFor="cognac">Коньяк</label>
+	          </div>
+	          <div className="form__wrapper-checkbox">
+	            <input type="checkbox" id="champagne" />
+	            <label htmlFor="champagne">Шампанское</label>
+	          </div>
+	          <div className="form__wrapper-checkbox">
+	            <input type="checkbox" id="not" />
+	            <label htmlFor="not">Не буду пить алкоголь</label>
+	          </div>
           </div>
         </div>
-        <button>Отправить</button>
+        <button className="form__button">Отправить</button>
         <div className="form__names">
           <p className="top">Ваши</p>
           <div className="form__name-wrapper">
