@@ -36,6 +36,7 @@ const App = () => {
           className="background"
           src={backgroundVideo}
           loop
+					muted
           playsInline
           autoPlay={false}
           controls={false}
