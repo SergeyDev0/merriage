@@ -59,6 +59,7 @@ const App = () => {
 
         if (response.data.status !== "error") {
           console.log(response.data);
+					alert("Приглашение отправлено!");
         }
       });
     }
