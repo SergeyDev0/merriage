@@ -197,7 +197,7 @@ const App = () => {
             </div>
           </li>
         </ul>
-        <h2 className="title">Место проведения</h2>
+				<h2 className="title">Место проведения</h2>
         <p className="tips__location top">Ресторан&nbsp;«У Фонтана»</p>
         <p className="tips__location">
           г.&nbsp;Усть-Лабинск, ул.&nbsp;Мира&nbsp;54А
@@ -216,6 +216,30 @@ const App = () => {
               defaultState={{ center: [45.209739, 39.689078], zoom: 18 }}
             >
               <Placemark geometry={[45.209739, 39.689078]} />
+            </Map>
+          </div>
+        </YMaps>
+      </section>
+			<section className="tips">
+        <h2 className="title">Место регистрации</h2>
+        <p className="tips__location top">Дворец&nbsp;бракосочетания «Екатерининский&nbsp;зал»</p>
+        <p className="tips__location">
+          г.&nbsp;Краснодар, ул.&nbsp;Офицерская&nbsp;47
+        </p>
+        <h4 className="tips__subtitle">Как добраться:</h4>
+        <p className="tips__text">
+          Пожалуйста, используйте карту для перехода в навигатор чтобы добраться
+          до местоположения
+        </p>
+      </section>
+      <section className="map">
+        <YMaps query={{ apikey: "e93e98c3-63a7-4ee9-8394-2011186193f7" }}>
+          <div className="map__wrapper">
+            <Map
+              className="y-map"
+              defaultState={{ center: [45.060000, 38.987485], zoom: 18 }}
+            >
+              <Placemark geometry={[45.060000, 38.987485]} />
             </Map>
           </div>
         </YMaps>
