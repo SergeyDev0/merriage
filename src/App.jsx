@@ -5,11 +5,25 @@ import surprises from "./assets/surprises.svg";
 import flowers from "./assets/flowers.svg";
 import gifts from "./assets/gifts.svg";
 import questions from "./assets/questions.svg";
+import axios from "axios";
 
 const App = () => {
+  const [data, setData] = React.useState({
+    visitorName: "ФИО",
+    phoneNumber: "+79882945242",
+    partnerName: "Миха",
+    childrenName: "Алёша",
+    beVodka: false,
+    beWine: false,
+    beCongac: false,
+    beChampagne: false,
+    dontDrink: false,
+    willTheRegistration: false,
+		isVisit: false,
+  });
   const videoRef = React.useRef(null);
 
-	function startVideo() {
+  function startVideo() {
     videoRef.current.currentTime = 0;
     videoRef.current.play();
   }
@@ -20,7 +34,7 @@ const App = () => {
   }
 
   React.useEffect(() => {
-		startVideo();
+    startVideo();
 
     setInterval(() => {
       restartVideo();
@@ -28,6 +42,28 @@ const App = () => {
 
     return () => clearInterval();
   }, []);
+
+	async function sendToEmail() {
+
+    let config = {
+      method: 'POST',
+      url: 'https://monosortcoffee.ru/md/api/form',
+      headers: { 
+        'Content-Type': 'application/json',
+      },
+      data : data,
+    };
+
+    axios.request(config)
+    .then((response) => {
+      console.log(response)
+
+      if(response.data.status !== "error") {
+        console.log(response.data)
+      }
+    })
+	}
+	
   return (
     <>
       <div className="wrapper-background">
@@ -36,7 +72,7 @@ const App = () => {
           className="background"
           src={backgroundVideo}
           loop
-					muted
+          muted
           playsInline
           autoPlay={false}
           controls={false}
@@ -73,7 +109,7 @@ const App = () => {
               <p>Регистрация брака</p>
             </div>
             <div className="col">
-              <span>-&nbsp;16:00&nbsp;-</span>
+              <span>-&nbsp;с 15:00 до 16:00&nbsp;-</span>
               <p>Сбор гостей в ресторане</p>
             </div>
           </div>
@@ -193,57 +229,166 @@ const App = () => {
         <div className="form__inputs">
           <div className="form__wrapper">
             <label htmlFor="">Ваше имя и фамилия</label>
-            <input type="text" />
+            <input
+              type="text"
+              onChange={(e) =>
+                setData((prevData) => ({
+                  ...prevData,
+                  visitorName: e.target.value,
+                }))
+              }
+            />
           </div>
           <div className="form__wrapper">
             <label htmlFor="">Планируете ли присутствовать?</label>
             <div className="select-wrapper">
-            	<select name="" id="">
-	              <option value="default">Выберите один вариант</option>
-	              <option value="1">Да, конечно </option>
-	              <option value="2">К сожалению, нет</option>
-	            </select>
+              <select
+                name=""
+                id=""
+                onChange={(e) => {
+                  setData((prevData) => ({
+                    ...prevData,
+                    isVisit:
+                      e.target.selectedIndex === 1 ? true : false
+                  }));
+                }}
+              >
+                <option selected value="default" disabled>Выберите один вариант</option>
+                <option value="1">Да, конечно </option>
+                <option value="2">К сожалению, нет</option>
+              </select>
+            </div>
+          </div>
+          <div className="form__wrapper">
+            <label htmlFor="">
+              Планируете ли присутствовать на регистрации?
+            </label>
+            <div className="select-wrapper">
+              <select
+                name=""
+                id=""
+                onChange={(e) => {
+                  setData((prevData) => ({
+                    ...prevData,
+                    willTheRegistration:
+                      e.target.selectedIndex === 1 ? true : false
+                  }));
+                }}
+              >
+                <option selected value="default" disabled>Выберите один вариант</option>
+                <option value="1">Да, конечно </option>
+                <option value="2">К сожалению, нет</option>
+              </select>
             </div>
           </div>
           <div className="form__wrapper">
             <label htmlFor="">Ваш номер телефона</label>
-            <input type="text" />
+            <input
+              type="phone"
+              onChange={(e) =>
+                setData((prevData) => ({
+                  ...prevData,
+                  phoneNumber: e.target.value,
+                }))
+              }
+            />
           </div>
           <div className="form__wrapper">
             <label htmlFor="">Я буду с парой (Имя, Фамилия)</label>
-            <input type="text" />
+            <input
+              type="text"
+              onChange={(e) =>
+                setData((prevData) => ({
+                  ...prevData,
+                  partnerName: e.target.value,
+                }))
+              }
+            />
           </div>
           <div className="form__wrapper">
             <label htmlFor="">Я буду с детьми (Имя)</label>
-            <input type="text" />
+            <input
+              type="text"
+              onChange={(e) =>
+                setData((prevData) => ({
+                  ...prevData,
+                  childrenName: e.target.value,
+                }))
+              }
+            />
           </div>
         </div>
         <div className="form__alcohol">
           <h4 className="subtitle">Буду пить</h4>
           <div className="col">
-          	<div className="form__wrapper-checkbox">
-	            <input type="checkbox" id="vodka" />
-	            <label htmlFor="vodka">Водка</label>
-	          </div>
-	          <div className="form__wrapper-checkbox">
-	            <input type="checkbox" id="wine" />
-	            <label htmlFor="wine">Вино</label>
-	          </div>
-	          <div className="form__wrapper-checkbox">
-	            <input type="checkbox" id="cognac" />
-	            <label htmlFor="cognac">Коньяк</label>
-	          </div>
-	          <div className="form__wrapper-checkbox">
-	            <input type="checkbox" id="champagne" />
-	            <label htmlFor="champagne">Шампанское</label>
-	          </div>
-	          <div className="form__wrapper-checkbox">
-	            <input type="checkbox" id="not" />
-	            <label htmlFor="not">Не буду пить алкоголь</label>
-	          </div>
+            <div className="form__wrapper-checkbox">
+              <input
+                type="checkbox"
+                id="vodka"
+                onChange={() =>
+                  setData((prevData) => ({
+                    ...prevData,
+                    beVodka: !prevData.beVodka,
+                  }))
+                }
+              />
+              <label htmlFor="vodka">Водка</label>
+            </div>
+            <div className="form__wrapper-checkbox">
+              <input
+                type="checkbox"
+                id="wine"
+                onChange={() =>
+                  setData((prevData) => ({
+                    ...prevData,
+                    beWine: !prevData.beWine,
+                  }))
+                }
+              />
+              <label htmlFor="wine">Вино</label>
+            </div>
+            <div className="form__wrapper-checkbox">
+              <input
+                type="checkbox"
+                id="cognac"
+                onChange={() =>
+                  setData((prevData) => ({
+                    ...prevData,
+                    beCongac: !prevData.beCongac,
+                  }))
+                }
+              />
+              <label htmlFor="cognac">Коньяк</label>
+            </div>
+            <div className="form__wrapper-checkbox">
+              <input
+                type="checkbox"
+                id="champagne"
+                onChange={() =>
+                  setData((prevData) => ({
+                    ...prevData,
+                    beChampagne: !prevData.beChampagne,
+                  }))
+                }
+              />
+              <label htmlFor="champagne">Шампанское</label>
+            </div>
+            <div className="form__wrapper-checkbox">
+              <input
+                type="checkbox"
+                id="not"
+                onChange={() =>
+                  setData((prevData) => ({
+                    ...prevData,
+                    dontDrink: !prevData.dontDrink,
+                  }))
+                }
+              />
+              <label htmlFor="not">Не буду пить алкоголь</label>
+            </div>
           </div>
         </div>
-        <button className="form__button">Отправить</button>
+        <button className="form__button" onClick={sendToEmail}>Отправить</button>
         <div className="form__names">
           <p className="top">Ваши</p>
           <div className="form__name-wrapper">
