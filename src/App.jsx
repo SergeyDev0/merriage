@@ -9,17 +9,17 @@ import axios from "axios";
 
 const App = () => {
   const [data, setData] = React.useState({
-    visitorName: "ФИО",
-    phoneNumber: "+79882945242",
-    partnerName: "Миха",
-    childrenName: "Алёша",
+    visitorName: "",
+    phoneNumber: "",
+    partnerName: "",
+    childrenName: "",
     beVodka: false,
     beWine: false,
     beCongac: false,
     beChampagne: false,
     dontDrink: false,
     willTheRegistration: false,
-		isVisit: false,
+    isVisit: false,
   });
   const videoRef = React.useRef(null);
 
@@ -43,27 +43,27 @@ const App = () => {
     return () => clearInterval();
   }, []);
 
-	async function sendToEmail() {
-
+  async function sendToEmail() {
     let config = {
-      method: 'POST',
-      url: 'https://monosortcoffee.ru/md/api/form',
-      headers: { 
-        'Content-Type': 'application/json',
+      method: "POST",
+      url: "https://monosortcoffee.ru/md/api/form",
+      headers: {
+        "Content-Type": "application/json",
       },
-      data : data,
+      data: data,
     };
 
-    axios.request(config)
-    .then((response) => {
-      console.log(response)
+    if (data.visitorName !== "" && data.phoneNumber !== "") {
+      axios.request(config).then((response) => {
+        console.log(response);
 
-      if(response.data.status !== "error") {
-        console.log(response.data)
-      }
-    })
-	}
-	
+        if (response.data.status !== "error") {
+          console.log(response.data);
+        }
+      });
+    }
+  }
+
   return (
     <>
       <div className="wrapper-background">
@@ -248,12 +248,13 @@ const App = () => {
                 onChange={(e) => {
                   setData((prevData) => ({
                     ...prevData,
-                    isVisit:
-                      e.target.selectedIndex === 1 ? true : false
+                    isVisit: e.target.selectedIndex === 1 ? true : false,
                   }));
                 }}
               >
-                <option selected value="default" disabled>Выберите один вариант</option>
+                <option selected value="default" disabled>
+                  Выберите один вариант
+                </option>
                 <option value="1">Да, конечно </option>
                 <option value="2">К сожалению, нет</option>
               </select>
@@ -271,11 +272,13 @@ const App = () => {
                   setData((prevData) => ({
                     ...prevData,
                     willTheRegistration:
-                      e.target.selectedIndex === 1 ? true : false
+                      e.target.selectedIndex === 1 ? true : false,
                   }));
                 }}
               >
-                <option selected value="default" disabled>Выберите один вариант</option>
+                <option selected value="default" disabled>
+                  Выберите один вариант
+                </option>
                 <option value="1">Да, конечно </option>
                 <option value="2">К сожалению, нет</option>
               </select>
@@ -388,7 +391,9 @@ const App = () => {
             </div>
           </div>
         </div>
-        <button className="form__button" onClick={sendToEmail}>Отправить</button>
+        <button className="form__button" onClick={sendToEmail}>
+          Отправить
+        </button>
         <div className="form__names">
           <p className="top">Ваши</p>
           <div className="form__name-wrapper">
